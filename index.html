@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مستعرض الملفات الخاصة بالملتقى</title>
+    <title>مستعرض ملفات  الملتقى</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,64 +11,53 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
 
     <style>
       :root {
-        --primary-color: #00796b;
-        --secondary-color: #004d40;
-        --bg-color: #f0f4f8;
+        --primary-color: #007bff;
+        --secondary-color: #1a73e8;
+        --bg-color: #f4f7f6;
         --panel-bg: #ffffff;
-        --border-color: #cfd8dc;
-        --text-color: #263238;
-        --light-text: #78909c;
-        --hover-bg: #e8f0f5;
+        --border-color: #e0e4e7;
+        --text-color: #333d47;
+        --light-text: #707b85;
+        --hover-bg: #f0f3f5;
         --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05);
       }
 
       body.dark-mode {
-        --bg-color: #1a1a1a;
-        --panel-bg: #262626;
-        --border-color: #424242;
+        --bg-color: #121212;
+        --panel-bg: #1e1e1e;
+        --border-color: #333333;
         --text-color: #e0e0e0;
-        --light-text: #bdbdbd;
-        --hover-bg: #333333;
-        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.6);
+        --light-text: #b0b0b0;
+        --hover-bg: #2a2a2a;
+        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
 
-      body.dark-mode #file-filter,
-      body.dark-mode #search-input {
-        background-color: #333333;
-        border-color: #555;
-        color: var(--text-color);
-      }
-      body.dark-mode #file-filter:focus,
-      body.dark-mode #search-input:focus {
-        background-color: #262626;
-      }
-      body.dark-mode #dark-mode-toggle i {
-        color: var(--text-color);
-      }
-
+      /* مهم جدًا لضبط Flex Scroll بشكل صحيح */
+      html,
       body {
-        font-family: "Almarai", "Tajawal", sans-serif;
+        height: 100%;
+      }
+      body {
+        font-family: "Cairo", sans-serif;
         margin: 0;
         background-color: var(--bg-color);
         color: var(--text-color);
-        display: flex;
-        min-height: 100vh;
-        overflow-x: hidden;
+        height: 100vh;
+        overflow: hidden;
         transition: background-color 0.3s, color 0.3s;
       }
 
       .container {
         display: flex;
         width: 100%;
-        flex-grow: 1;
+        height: 100%;
       }
 
       .sidebar {
@@ -79,10 +68,8 @@
         display: flex;
         flex-direction: column;
         box-shadow: var(--shadow-elevation);
-        transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
-        position: sticky;
-        top: 0;
-        height: 100vh;
+        height: 100%;
+        min-height: 0;
       }
 
       .sidebar-header {
@@ -90,20 +77,19 @@
         border-bottom: 1px solid var(--border-color);
         display: flex;
         flex-direction: column;
+        gap: 10px;
       }
 
       .sidebar-header .top-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 15px;
       }
 
       .sidebar-header h3 {
         margin: 0;
         font-size: 1.6em;
         font-weight: 700;
-        color: var(--text-color);
       }
 
       #dark-mode-toggle {
@@ -112,19 +98,16 @@
         padding: 0;
         background: none;
         color: var(--text-color);
-        box-shadow: none;
         border: 1px solid var(--border-color);
         border-radius: 50%;
         cursor: pointer;
-        transition: background-color 0.2s, color 0.2s;
       }
-      #dark-mode-toggle i {
-        margin: 0;
-        font-size: 1.1em;
+
+      body.dark-mode #file-filter,
+      body.dark-mode #search-input {
+        background-color: #2a2a2a;
+        border-color: #444;
         color: var(--text-color);
-      }
-      #dark-mode-toggle:hover {
-        background: var(--hover-bg);
       }
 
       #file-filter,
@@ -133,39 +116,18 @@
         padding: 12px 15px;
         border-radius: 8px;
         border: 1px solid var(--border-color);
-        font-family: "Almarai", "Tajawal", sans-serif;
+        font-family: "Cairo", sans-serif;
         font-size: 1em;
         box-sizing: border-box;
-        transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s,
-          color 0.3s;
         background-color: var(--hover-bg);
         color: var(--text-color);
       }
 
-      #search-input {
-        margin-top: 10px;
-      }
-
-      #file-filter:focus,
-      #search-input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.15);
-        background-color: var(--panel-bg);
-      }
-
-      #search-input::placeholder {
-        color: var(--light-text);
-        font-weight: 300;
-      }
-
       .table-container {
-        overflow-y: auto;
-        flex-grow: 1;
+        overflow: auto;
+        flex: 1 1 auto;
+        min-height: 0;
         padding: 0 15px;
-        position: relative;
-        mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
       }
 
       #file-table {
@@ -174,7 +136,6 @@
         border-spacing: 0 8px;
         margin-top: 10px;
       }
-
       #file-table thead th {
         display: none;
       }
@@ -198,9 +159,7 @@
         background-color: var(--primary-color);
         color: white;
         font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0, 121, 107, 0.4);
       }
-
       #file-table tbody tr.active i {
         color: white !important;
       }
@@ -218,93 +177,75 @@
         color: var(--light-text);
         font-weight: 600;
       }
-
       #file-table tbody tr.active td.col-seq {
-        color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.85) !important;
       }
 
       #file-table td.col-name {
         white-space: normal;
         word-wrap: break-word;
         font-weight: 400;
-        flex-grow: 1;
       }
 
       #file-table td.col-type {
         width: 40px;
         text-align: center;
       }
-
       #file-table td.col-type i {
         font-size: 1.6em;
-        transition: color 0.2s;
       }
 
+      /* Accordion */
       #file-table tbody tr.folder-header {
         background-color: var(--panel-bg);
         box-shadow: none;
         cursor: pointer;
         margin-top: 15px;
       }
-
-      #file-table tbody tr.folder-header:hover {
-        background-color: var(--hover-bg);
-        transform: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-      }
-
       .folder-header-content {
         padding: 10px 15px !important;
       }
-
       .folder-title {
         display: flex;
         align-items: center;
-        font-size: 1.15em;
+        font-size: 1.05em;
         font-weight: 700;
         color: var(--primary-color);
       }
-
       .folder-title .arrow-icon {
         margin-left: 10px;
         transition: transform 0.3s ease;
         font-size: 0.8em;
         color: var(--light-text);
       }
-
       .folder-title .folder-icon {
         margin-left: 10px;
-        color: #607d8b;
-        font-size: 1.2em;
+        color: #f7a01a;
+        font-size: 1.1em;
       }
-
       .folder-title .file-count {
         font-size: 0.9em;
         font-weight: 400;
         color: var(--light-text);
         margin-right: 10px;
       }
-
       #file-table tr.folder-header[data-is-expanded="true"] .arrow-icon {
         transform: rotate(-90deg);
       }
 
-      #file-list tr:first-child.folder-header {
-        margin-top: 0;
-      }
-
       .main-content {
-        flex-grow: 1;
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 0; /* هذا أهم سطر لمنع “اختفاء” محتوى JSON داخل Flex */
         padding: 30px;
         display: flex;
         flex-direction: column;
-        overflow: visible;
-        min-height: 100vh;
-        min-width: 0; /* مهم جدًا لمنع تمدد المحتوى خارج الصفحة */
+        overflow: hidden; /* خلي السكروول داخل #viewer فقط */
       }
 
       .viewer-controls {
-        margin-bottom: 20px;
+        flex: 0 0 auto;
+        margin-bottom: 15px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -315,188 +256,144 @@
       .header-info {
         display: flex;
         align-items: baseline;
-        flex-wrap: wrap;
-        flex-grow: 1;
+        gap: 10px;
       }
 
       .viewer-controls h2 {
-        margin: 0 10px 0 0;
-        font-size: 1.5em;
+        margin: 0;
+        font-size: 1.4em;
         font-weight: 600;
-        color: var(--text-color);
       }
 
       .programmer-credit {
         font-size: 1em;
-        font-weight: 700;
-        color: var(--primary-color);
+        font-weight: 400;
+        color: var(--light-text);
         white-space: nowrap;
       }
 
-      /* أزرار التحكم */
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
       #download-btn,
       #open-tab-btn {
         display: none;
         align-items: center;
         justify-content: center;
-        padding: 10px 20px;
+        padding: 10px 18px;
+        background-color: var(--primary-color);
         color: white;
         text-decoration: none;
         border-radius: 25px;
         font-size: 1em;
         font-weight: 600;
-        transition: background-color 0.3s ease, transform 0.2s ease,
-          box-shadow 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 121, 107, 0.2);
       }
-
-      #download-btn {
-        background-color: var(--primary-color);
-      }
-      #download-btn i {
-        margin-left: 10px;
-        font-size: 1.1em;
-      }
-      #download-btn:hover {
-        background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(0, 121, 107, 0.3);
-        transform: translateY(-1px);
-      }
-
-      #open-tab-btn {
-        background-color: var(--secondary-color);
-      }
+      #download-btn i,
       #open-tab-btn i {
         margin-left: 10px;
-        font-size: 1.05em;
-      }
-      #open-tab-btn:hover {
-        background-color: var(--primary-color);
-        transform: translateY(-1px);
       }
 
-      /* ====== العارض ====== */
-     #viewer {
-  flex-grow: 1;
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: var(--shadow-elevation);
-  position: relative;
+      /* Viewer مضبوط */
+      #viewer {
+        flex: 1 1 auto;
+        min-height: 0; /* مهم جدًا */
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: var(--shadow-elevation);
+        overflow: hidden; /* السكروول للداخل (json-viewer) أو iframe */
+        display: flex;
+      }
 
-  display: flex;
-  justify-content: stretch;
-  align-items: stretch;
-
-  overflow: auto;
-  transition: background-color 0.3s, border-color 0.3s;
-  min-height: 500px;
-  min-width: 0; /* مهم */
-}
-
-/* مهم لعناصر flex داخل العارض حتى لا “تفرض” عرضًا أكبر */
-#viewer > * {
-  min-width: 0;
-  min-height: 0;
-}
+      /* iframe يبقى متمدّد طبيعيًا */
       #viewer iframe {
         width: 100%;
         height: 100%;
-        border: none;
-        background-color: var(--panel-bg);
+        border: 0;
+      }
+
+      /* الصور: تحجيم تلقائي + بدون تشويه + بدون سكرول */
+      #viewer img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        margin: auto; /* توسيط داخل الـ viewer */
+        display: block;
+        object-fit: contain; /* مهم: يمنع التمديد */
+      }
+
+      /* الفيديو: نفس منطق الصور */
+      #viewer video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+        display: block;
       }
 
       .loader-message {
-        font-size: 1.3em;
+        margin: auto;
+        font-size: 1.15em;
         color: var(--light-text);
-        font-weight: 400;
         text-align: center;
         padding: 20px;
-        margin: auto;
       }
 
-      #viewer img,
-      #viewer video {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        border-radius: 10px;
-        margin: auto;
+      /* JSON viewer (سكرول أفقي + عمودي) */
+      .json-viewer {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 0;
+        width: 100%;
+        height: 100%;
+        padding: 18px;
+        margin: 0;
+        box-sizing: border-box;
+        overflow-x: auto;
+        overflow-y: auto;
+        white-space: pre;
+        direction: ltr;
+        text-align: left;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95em;
+        line-height: 1.55;
       }
 
-      #viewer audio {
-        width: 80%;
-        margin: auto;
+      .sidebar {
+        width: min(380px, 42vw);
+        min-width: 280px;
+        background-color: var(--panel-bg);
+        border-left: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-elevation);
+        position: sticky;
+        top: 0;
+        height: 100vh;
       }
-
-      /* JSON viewer */
-     .json-viewer {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 18px;
-  box-sizing: border-box;
-  overflow: auto;
-
-  white-space: pre;     /*  التفاف داخل العرض بمسطرة */
-  overflow-x: auto;   
-  overflow-y: auto;
- 
-  direction: ltr;
-  text-align: left;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 0.95em;
-  line-height: 1.55;
-
-  color: var(--text-color);
-  background: var(--panel-bg);
-}
-
-      .footer {
-        padding: 15px 0 0 0;
-        text-align: center;
-        font-size: 0.85em;
-        color: var(--light-text);
-        border-top: 1px solid var(--border-color);
-        margin-top: 20px;
-      }
-
       @media (max-width: 768px) {
         .container {
           flex-direction: column;
         }
+
         .sidebar {
           width: 100%;
           height: auto;
           max-height: 50vh;
-          min-height: 250px;
+          min-height: 220px;
           position: static;
           border-left: none;
           border-bottom: 1px solid var(--border-color);
         }
+
         .main-content {
           padding: 20px;
           min-height: auto;
-        }
-        .table-container {
-          padding: 0 10px;
-        }
-        .viewer-controls {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .header-info {
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 10px;
-        }
-        .viewer-controls h2 {
-          font-size: 1.3em;
-          margin: 0 0 5px 0;
-        }
-        .programmer-credit {
-          font-size: 0.9em;
         }
       }
     </style>
@@ -508,26 +405,26 @@
         <div class="sidebar-header">
           <div class="top-row">
             <h3>📂 فهرس الملفات</h3>
-            <button id="dark-mode-toggle" title="الوضع الداكن / الوضع الفاتح">
+            <button id="dark-mode-toggle" title="الوضع الداكن / الفاتح">
               <i class="fa-solid fa-moon"></i>
             </button>
           </div>
 
           <select id="file-filter">
             <option value="all">عرض الكل</option>
-            <option value="pdf">ملفات PDF</option>
-            <option value="doc">مستندات Word</option>
-            <option value="xls">جداول Excel</option>
-            <option value="ppt">عروض PowerPoint</option>
-            <option value="img">ملفات الصور</option>
-            <option value="video">ملفات الفيديو</option>
-            <option value="audio">ملفات الصوت</option>
-            <option value="txt">ملفات نصية</option>
-            <option value="html">ملفات HTML</option>
-            <option value="json">ملفات JSON</option>
+            <option value="pdf">PDF</option>
+            <option value="doc">Word</option>
+            <option value="xls">Excel</option>
+            <option value="ppt">PowerPoint</option>
+            <option value="img">صور</option>
+            <option value="video">فيديو</option>
+            <option value="audio">صوت</option>
+            <option value="txt">نصي</option>
+            <option value="html">HTML</option>
+            <option value="json">JSON</option>
           </select>
 
-          <input type="text" id="search-input" placeholder="🔍 ابحث عن ملف..." />
+          <input type="text" id="search-input" placeholder="🔍 ابحث..." />
         </div>
 
         <div class="table-container">
@@ -547,30 +444,32 @@
       <main class="main-content">
         <div class="viewer-controls">
           <div class="header-info">
-            <h2>مستعرض الملفات الخاصة بالملتقى</h2>
+            <h2>مستعرض ملفات الملتقى</h2>
             <span class="programmer-credit">github</span>
           </div>
 
-          <a
-            href="#"
-            id="open-tab-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-            >فتح في تبويب<i class="fa-solid fa-up-right-from-square"></i
-          ></a>
+          <div class="action-buttons">
+            <a
+              href="#"
+              id="open-tab-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              فتح في تبويب جديد <i class="fa-solid fa-up-right-from-square"></i>
+            </a>
 
-          <a href="#" id="download-btn" download
-            >تحميل الملف<i class="fa-solid fa-download"></i
-          ></a>
+            <a href="#" id="download-btn" download>
+              تحميل الملف <i class="fa-solid fa-download"></i>
+            </a>
+          </div>
         </div>
 
         <div id="viewer">
           <div class="loader-message">
-            الرجاء اختيار ملف من الفهرس لعرضه<br />(يعتمد على documents/index.json)
+            الرجاء اختيار ملف من الفهرس لعرضه<br />
+            (GitHub Pages)
           </div>
         </div>
-
-        <footer class="footer"></footer>
       </main>
     </div>
 
@@ -585,12 +484,12 @@
         const darkModeToggle = document.getElementById("dark-mode-toggle");
 
         const INDEX_URL = "documents/index.json";
-        const defaultFile = "تعليمات.pdf";
+        const BRANCH = "main";
 
+        const defaultFile = "تعليمات.pdf";
         const pinnedFiles = ["تعليمات.pdf"];
         const PINNED_FOLDER = "📌 ملفات مثبتة";
         const GENERAL_FOLDER = "ملفات عامة";
-        const BRANCH = "main";
 
         function initDarkMode() {
           const isDark =
@@ -599,19 +498,16 @@
               window.matchMedia("(prefers-color-scheme: dark)").matches &&
               localStorage.getItem("dark-mode") !== "false");
 
-          if (isDark) {
-            document.body.classList.add("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-          } else {
-            document.body.classList.remove("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-          }
+          document.body.classList.toggle("dark-mode", isDark);
+          darkModeToggle.innerHTML = isDark
+            ? '<i class="fa-solid fa-sun"></i>'
+            : '<i class="fa-solid fa-moon"></i>';
         }
 
         darkModeToggle.addEventListener("click", () => {
-          document.body.classList.toggle("dark-mode");
-          const isDark = document.body.classList.contains("dark-mode");
-          localStorage.setItem("dark-mode", isDark);
+          const isDark = !document.body.classList.contains("dark-mode");
+          document.body.classList.toggle("dark-mode", isDark);
+          localStorage.setItem("dark-mode", String(isDark));
           darkModeToggle.innerHTML = isDark
             ? '<i class="fa-solid fa-sun"></i>'
             : '<i class="fa-solid fa-moon"></i>';
@@ -621,39 +517,48 @@
           return String(filepath).split("/").map(encodeURIComponent).join("/");
         }
 
-        function getFileIconClass(filename) {
-          const extension = filename.split(".").pop().toLowerCase();
-          const solid = "fa-solid ";
-          if (extension === "pdf") return solid + "fa-file-pdf";
-          if (["doc", "docx"].includes(extension)) return solid + "fa-file-word";
-          if (["xls", "xlsx"].includes(extension)) return solid + "fa-file-excel";
-          if (["ppt", "pptx"].includes(extension))
-            return solid + "fa-file-powerpoint";
-          if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(extension))
-            return solid + "fa-file-image";
-          if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension))
-            return solid + "fa-file-video";
-          if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension))
-            return solid + "fa-file-audio";
-          if (extension === "txt") return solid + "fa-file-lines";
-          if (["html", "htm", "json"].includes(extension)) return solid + "fa-file-code";
-          return solid + "fa-file-archive";
+        function normalizePath(p) {
+          p = String(p || "");
+          p = p.replace(/^\.?\/*documents\//i, "");
+          return p;
         }
 
         function getFileType(filename) {
-          const extension = filename.split(".").pop().toLowerCase();
-          if (extension === "pdf") return "pdf";
-          if (["doc", "docx"].includes(extension)) return "doc";
-          if (["xls", "xlsx"].includes(extension)) return "xls";
-          if (["ppt", "pptx"].includes(extension)) return "ppt";
-          if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(extension))
+          const ext = String(filename).split(".").pop().toLowerCase();
+          if (ext === "pdf") return "pdf";
+          if (["doc", "docx"].includes(ext)) return "doc";
+          if (["xls", "xlsx"].includes(ext)) return "xls";
+          if (["ppt", "pptx"].includes(ext)) return "ppt";
+          if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(ext))
             return "img";
-          if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension)) return "video";
-          if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension)) return "audio";
-          if (extension === "txt") return "txt";
-          if (["html", "htm"].includes(extension)) return "html";
-          if (extension === "json") return "json";
+          if (["mp4", "mov", "webm", "avi", "mkv"].includes(ext))
+            return "video";
+          if (["mp3", "wav", "ogg", "aac", "flac", "m4a"].includes(ext))
+            return "audio";
+          if (ext === "txt") return "txt";
+          if (["html", "htm"].includes(ext)) return "html";
+          if (ext === "json") return "json";
           return "other";
+        }
+
+        function getFileIconClass(filename) {
+          const ext = String(filename).split(".").pop().toLowerCase();
+          const solid = "fa-solid ";
+          if (ext === "pdf") return solid + "fa-file-pdf";
+          if (["doc", "docx"].includes(ext)) return solid + "fa-file-word";
+          if (["xls", "xlsx"].includes(ext)) return solid + "fa-file-excel";
+          if (["ppt", "pptx"].includes(ext))
+            return solid + "fa-file-powerpoint";
+          if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(ext))
+            return solid + "fa-file-image";
+          if (["mp4", "mov", "webm", "avi", "mkv"].includes(ext))
+            return solid + "fa-file-video";
+          if (["mp3", "wav", "ogg", "aac", "flac", "m4a"].includes(ext))
+            return solid + "fa-file-audio";
+          if (ext === "txt") return solid + "fa-file-lines";
+          if (["html", "htm"].includes(ext)) return solid + "fa-file-code";
+          if (ext === "json") return solid + "fa-brackets-curly";
+          return solid + "fa-file";
         }
 
         function toggleFolderVisibility(event) {
@@ -661,40 +566,53 @@
           const folderName = headerRow.dataset.folderName;
           const isExpanded = headerRow.dataset.isExpanded === "true";
 
-          document.querySelectorAll("#file-list .folder-header").forEach((otherHeader) => {
-            if (otherHeader !== headerRow) {
-              otherHeader.dataset.isExpanded = "false";
-              otherHeader.querySelector(".arrow-icon").style.transform = "rotate(0deg)";
-              const otherFolderName = otherHeader.dataset.folderName;
-              document
-                .querySelectorAll(`#file-list tr[data-folder="${otherFolderName}"]`)
-                .forEach((fileRow) => (fileRow.style.display = "none"));
-            }
-          });
+          document
+            .querySelectorAll("#file-list .folder-header")
+            .forEach((h) => {
+              if (h !== headerRow) {
+                h.dataset.isExpanded = "false";
+                const other = h.dataset.folderName;
+                document
+                  .querySelectorAll(`#file-list tr[data-folder="${other}"]`)
+                  .forEach((r) => (r.style.display = "none"));
+              }
+            });
 
           if (isExpanded) {
             headerRow.dataset.isExpanded = "false";
-            headerRow.querySelector(".arrow-icon").style.transform = "rotate(0deg)";
             document
               .querySelectorAll(`#file-list tr[data-folder="${folderName}"]`)
-              .forEach((fileRow) => (fileRow.style.display = "none"));
+              .forEach((r) => (r.style.display = "none"));
           } else {
             headerRow.dataset.isExpanded = "true";
-            headerRow.querySelector(".arrow-icon").style.transform = "rotate(-90deg)";
             document
               .querySelectorAll(`#file-list tr[data-folder="${folderName}"]`)
-              .forEach((fileRow) => {
-                if (fileRow.dataset.isHiddenBySearch !== "true") fileRow.style.display = "";
+              .forEach((r) => {
+                if (r.dataset.isHiddenBySearch !== "true") r.style.display = "";
               });
           }
         }
 
         async function loadIndex() {
-          const url = `${INDEX_URL}?v=${Date.now()}`;
-          const res = await fetch(url, { cache: "no-store" });
-          if (!res.ok) throw new Error(`تعذر تحميل ${INDEX_URL} (HTTP ${res.status})`);
+          const res = await fetch(`${INDEX_URL}?v=${Date.now()}`, {
+            cache: "no-store",
+          });
+          if (!res.ok)
+            throw new Error(`تعذر تحميل ${INDEX_URL} (HTTP ${res.status})`);
+
           const data = await res.json();
-          return Array.isArray(data) ? data : data.files || [];
+          const files = Array.isArray(data) ? data : data.files || [];
+
+          // إزالة index.json نفسه من القائمة (اختياري)
+          return files
+            .filter((f) => f && f.name && f.path)
+            .filter(
+              (f) =>
+                !(
+                  String(f.name).toLowerCase() === "index.json" &&
+                  String(normalizePath(f.path)).toLowerCase() === "index.json"
+                )
+            );
         }
 
         function renderFoldersAndFiles(filesData) {
@@ -702,17 +620,19 @@
           const rest = [];
 
           for (const f of filesData) {
-            if (pinnedFiles.includes(f.name)) pinned.push({ ...f, folder: PINNED_FOLDER });
-            else rest.push(f);
+            const name = String(f.name);
+            const path = normalizePath(f.path);
+            const folder =
+              f.folder ||
+              (path.includes("/") ? path.split("/")[0] : GENERAL_FOLDER);
+
+            const item = { name, path, folder };
+            if (pinnedFiles.includes(name))
+              pinned.push({ ...item, folder: PINNED_FOLDER });
+            else rest.push(item);
           }
 
-          const all = [...pinned, ...rest].map((f) => ({
-            name: f.name,
-            path: f.path,
-            folder:
-              f.folder ||
-              (String(f.path).includes("/") ? String(f.path).split("/")[0] : GENERAL_FOLDER),
-          }));
+          const all = [...pinned, ...rest];
 
           const folders = new Map();
           for (const f of all) {
@@ -735,12 +655,12 @@
           for (const folderName of folderNames) {
             const folderFiles = folders.get(folderName);
 
-            const folderHeaderTr = document.createElement("tr");
-            folderHeaderTr.className = "folder-header";
-            folderHeaderTr.dataset.folderName = folderName;
-            folderHeaderTr.dataset.isExpanded = isFirstFolder ? "true" : "false";
+            const header = document.createElement("tr");
+            header.className = "folder-header";
+            header.dataset.folderName = folderName;
+            header.dataset.isExpanded = isFirstFolder ? "true" : "false";
 
-            folderHeaderTr.innerHTML = `
+            header.innerHTML = `
               <td colspan="3" class="folder-header-content">
                 <div class="folder-title">
                   <i class="fa-solid fa-chevron-left arrow-icon"></i>
@@ -750,12 +670,11 @@
                 </div>
               </td>
             `;
-
-            fileListElement.appendChild(folderHeaderTr);
-            folderHeaderTr.addEventListener("click", toggleFolderVisibility);
+            fileListElement.appendChild(header);
+            header.addEventListener("click", toggleFolderVisibility);
 
             let seq = 1;
-            folderFiles.forEach((fileData) => {
+            for (const fileData of folderFiles) {
               const tr = document.createElement("tr");
               const fileType = getFileType(fileData.name);
 
@@ -767,28 +686,23 @@
 
               if (!isFirstFolder) tr.style.display = "none";
 
-              const tdSeq = document.createElement("td");
-              tdSeq.className = "col-seq";
-              tdSeq.textContent = seq++;
+              tr.innerHTML = `
+                <td class="col-seq">${seq++}</td>
+                <td class="col-name">${
+                  fileData.name.substring(0, fileData.name.lastIndexOf(".")) ||
+                  fileData.name
+                }</td>
+                <td class="col-type"><i class="${getFileIconClass(
+                  fileData.name
+                )}"></i></td>
+              `;
 
-              const tdName = document.createElement("td");
-              tdName.className = "col-name";
-              tdName.textContent =
-                fileData.name.substring(0, fileData.name.lastIndexOf(".")) || fileData.name;
+              tr.addEventListener("click", () =>
+                displayFile(fileData.name, fileData.path, tr)
+              );
 
-              const tdType = document.createElement("td");
-              tdType.className = "col-type";
-              const icon = document.createElement("i");
-              icon.className = getFileIconClass(fileData.name);
-              tdType.appendChild(icon);
-
-              tr.appendChild(tdSeq);
-              tr.appendChild(tdName);
-              tr.appendChild(tdType);
-
-              tr.addEventListener("click", () => displayFile(fileData.name, fileData.path, tr));
               fileListElement.appendChild(tr);
-            });
+            }
 
             isFirstFolder = false;
           }
@@ -799,15 +713,25 @@
 
           if (defaultRow) defaultRow.click();
           else {
-            const firstRow = fileListElement.querySelector("tr:not(.folder-header)");
-            if (firstRow) displayFile(firstRow.dataset.filename, firstRow.dataset.filepath, firstRow);
+            const firstRow = fileListElement.querySelector(
+              "tr:not(.folder-header)"
+            );
+            if (firstRow)
+              displayFile(
+                firstRow.dataset.filename,
+                firstRow.dataset.filepath,
+                firstRow
+              );
           }
         }
 
         function searchAndFilterFiles() {
           const selectedType = filterElement.value;
           const searchTerm = searchElement.value.toLowerCase();
-          const rows = document.querySelectorAll("#file-list tr:not(.folder-header)");
+          const rows = document.querySelectorAll(
+            "#file-list tr:not(.folder-header)"
+          );
+
           const visibleFolders = new Set();
 
           rows.forEach((row) => {
@@ -816,8 +740,10 @@
             const fileType = row.dataset.filetype;
             const folderName = row.dataset.folder;
 
-            const typeMatch = selectedType === "all" || fileType === selectedType;
-            const searchMatch = fileName.includes(searchTerm) || filePath.includes(searchTerm);
+            const typeMatch =
+              selectedType === "all" || fileType === selectedType;
+            const searchMatch =
+              fileName.includes(searchTerm) || filePath.includes(searchTerm);
 
             if (typeMatch && searchMatch) {
               row.style.display = "";
@@ -829,42 +755,54 @@
             }
           });
 
-          document.querySelectorAll("#file-list .folder-header").forEach((folderRow) => {
-            const folderName = folderRow.dataset.folderName;
-            const hasVisibleFiles = visibleFolders.has(folderName);
+          document
+            .querySelectorAll("#file-list .folder-header")
+            .forEach((h) => {
+              const folderName = h.dataset.folderName;
+              const hasVisible = visibleFolders.has(folderName);
 
-            if (searchTerm !== "" || selectedType !== "all") {
-              if (hasVisibleFiles) {
-                folderRow.style.display = "";
-                folderRow.dataset.isExpanded = "true";
-                folderRow.querySelector(".arrow-icon").style.transform = "rotate(-90deg)";
-              } else folderRow.style.display = "none";
-            } else {
-              folderRow.style.display = "";
-              if (folderRow.dataset.isExpanded === "false") {
-                document
-                  .querySelectorAll(`#file-list tr[data-folder="${folderName}"]`)
-                  .forEach((fileRow) => (fileRow.style.display = "none"));
+              if (searchTerm !== "" || selectedType !== "all") {
+                h.style.display = hasVisible ? "" : "none";
+                h.dataset.isExpanded = hasVisible ? "true" : "false";
+
+                if (hasVisible) {
+                  document
+                    .querySelectorAll(
+                      `#file-list tr[data-folder="${folderName}"]`
+                    )
+                    .forEach((r) => {
+                      if (r.dataset.isHiddenBySearch !== "true")
+                        r.style.display = "";
+                    });
+                }
               } else {
+                h.style.display = "";
+                const expanded = h.dataset.isExpanded === "true";
                 document
                   .querySelectorAll(
-                    `#file-list tr[data-folder="${folderName}"][data-isHiddenBySearch="false"]`
+                    `#file-list tr[data-folder="${folderName}"]`
                   )
-                  .forEach((fileRow) => (fileRow.style.display = ""));
+                  .forEach((r) => {
+                    r.style.display = expanded ? "" : "none";
+                  });
               }
-            }
-          });
+            });
         }
 
         async function displayJson(fileUrl) {
-          viewerElement.innerHTML = `<div class="loader-message">جاري تحميل JSON...</div>`;
+          viewerElement.innerHTML =
+            '<div class="loader-message">جاري تحميل JSON...</div>';
+
           try {
-            const res = await fetch(fileUrl, { cache: "no-store" });
+            const res = await fetch(`${fileUrl}?v=${Date.now()}`, {
+              cache: "no-store",
+            });
             const text = await res.text();
 
             let pretty = text;
             try {
-              pretty = JSON.stringify(JSON.parse(text), null, 2);
+              const obj = JSON.parse(text);
+              pretty = JSON.stringify(obj, null, 2);
             } catch (_) {}
 
             const pre = document.createElement("pre");
@@ -875,107 +813,116 @@
             viewerElement.appendChild(pre);
           } catch (e) {
             viewerElement.innerHTML =
-              `<div class="loader-message" style="color:#e74c3c;">فشل تحميل ملف JSON.</div>`;
+              '<div class="loader-message" style="color:#e74c3c;">فشل تحميل ملف JSON.</div>';
           }
         }
 
         function displayFile(filename, filepath, activeRow) {
-          document.querySelectorAll("#file-list tr").forEach((item) => item.classList.remove("active"));
+          document
+            .querySelectorAll("#file-list tr")
+            .forEach((r) => r.classList.remove("active"));
           activeRow.classList.add("active");
 
-          viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
+          viewerElement.innerHTML =
+            '<div class="loader-message">جاري تحميل المعاينة...</div>';
 
-          // أخفِ الأزرار افتراضياً
           downloadBtn.style.display = "none";
           openTabBtn.style.display = "none";
 
-          // تعريف الامتداد قبل أي استخدام
           const ext = String(filename).split(".").pop().toLowerCase();
-
-          const encodedPath = toUrlPath(filepath);
+          const cleanPath = normalizePath(filepath);
+          const encodedPath = toUrlPath(cleanPath);
           const fileUrl = `documents/${encodedPath}`;
 
-          // زر التحميل
           downloadBtn.href = fileUrl;
           downloadBtn.style.display = "inline-flex";
 
-          // JSON
+          if (["html", "htm"].includes(ext)) {
+            openTabBtn.href = fileUrl;
+            openTabBtn.style.display = "inline-flex";
+          }
+
           if (ext === "json") {
             displayJson(fileUrl);
             return;
           }
 
-          // PDF / HTML / TXT
-          if (ext === "pdf" || ["html", "htm", "txt"].includes(ext)) {
+          if (ext === "pdf" || ext === "txt" || ["html", "htm"].includes(ext)) {
             viewerElement.innerHTML = `<iframe src="${fileUrl}"></iframe>`;
-
-            // زر فتح تبويب لملفات HTML فقط
-            if (["html", "htm"].includes(ext)) {
-              openTabBtn.href = fileUrl;
-              openTabBtn.style.display = "inline-flex";
-            }
             return;
           }
 
-          // Images
-          if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(ext)) {
-            viewerElement.innerHTML = `<img src="${fileUrl}" alt="معاينة ${filename}">`;
+          if (
+            ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(ext)
+          ) {
+            viewerElement.innerHTML = `<img src="${fileUrl}" alt="معاينة ${filename}" />`;
             return;
           }
 
-          // Video
           if (["mp4", "mov", "webm", "avi", "mkv"].includes(ext)) {
             viewerElement.innerHTML = `
-              <video controls autoplay style="max-width:100%; max-height:100%; border-radius:10px;">
+              <video controls style="width:100%; height:100%; background:#000;">
                 <source src="${fileUrl}">
-                <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
               </video>`;
             return;
           }
 
-          // Audio
-          if (["mp3", "wav", "ogg", "aac", "flac"].includes(ext)) {
+          if (["mp3", "wav", "ogg", "aac", "flac", "m4a"].includes(ext)) {
             viewerElement.innerHTML = `
-              <audio controls autoplay style="width:80%; margin:auto;">
-                <source src="${fileUrl}">
-                <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
-              </audio>`;
+              <div class="loader-message" style="width:100%;">
+                <audio controls style="width:80%;">
+                  <source src="${fileUrl}">
+                </audio>
+              </div>`;
             return;
           }
 
-          // Office via Office Online Viewer
-          if (["docx","pptx","xlsx","doc","ppt","xls","dotx","dotm","potx","potm","xltx","xltm"].includes(ext)) {
+          if (
+            [
+              "docx",
+              "pptx",
+              "xlsx",
+              "doc",
+              "ppt",
+              "xls",
+              "dotx",
+              "dotm",
+              "potx",
+              "potm",
+              "xltx",
+              "xltm",
+            ].includes(ext)
+          ) {
             const username = window.location.hostname.split(".")[0];
             const repo = window.location.pathname.split("/")[1];
             const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/${BRANCH}/documents/${encodedPath}`;
-            const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(rawFileUrl)}`;
+            const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+              rawFileUrl
+            )}`;
             viewerElement.innerHTML = `<iframe src="${viewerUrl}"></iframe>`;
             return;
           }
 
-          viewerElement.innerHTML = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
+          viewerElement.innerHTML =
+            '<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>';
         }
 
         async function boot() {
           initDarkMode();
-
           try {
             const files = await loadIndex();
             if (!files.length) {
               viewerElement.innerHTML =
-                `<div class="loader-message">لا توجد ملفات داخل documents.</div>`;
+                '<div class="loader-message">لا توجد ملفات داخل documents.</div>';
               return;
             }
-
             renderFoldersAndFiles(files);
-
             filterElement.addEventListener("change", searchAndFilterFiles);
             searchElement.addEventListener("input", searchAndFilterFiles);
           } catch (e) {
-            viewerElement.innerHTML = `
-              <div class="loader-message" style="color:#e74c3c;">
-                فشل تحميل فهرس الملفات. تأكد من وجود <b>documents/index.json</b>.<br>${e.message}
-              </div>`;
+            viewerElement.innerHTML = `<div class="loader-message" style="color:#e74c3c;">
+              فشل تحميل فهرس الملفات. تأكد من وجود <b>documents/index.json</b>.<br>${e.message}
+            </div>`;
           }
         }
 
@@ -984,6 +931,3 @@
     </script>
   </body>
 </html>
-
-
-
