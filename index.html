@@ -573,6 +573,9 @@
             <h2>مستعرض الملفات الخاصة بالملتقى</h2>
             <span class="programmer-credit">github</span>
           </div>
+          <a href="#" id="open-tab-btn" target="_blank" rel="noopener noreferrer" style="display:none;"
+          >فتح في تبويب<i class="fa-solid fa-up-right-from-square"></i
+          ></a>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
           ></a>
@@ -885,6 +888,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (_) {
         // ليس JSON صالح؛ اعرضه كنص
       }
+      // اخفاء زر فتح تبويب افتراضياً
+if (openTabBtn) openTabBtn.style.display = "none";
 
       const pre = document.createElement("pre");
       pre.className = "json-viewer";
@@ -927,6 +932,16 @@ async function displayFile(filename, filepath, activeListItem) {
       openTabBtn.style.display = "inline-flex";
     }
   }
+    if (ext === "pdf" || ["html","htm","txt"].includes(ext)) {
+  viewerElement.innerHTML = `<iframe src="${fileUrl}"></iframe>`;
+
+  // إظهار زر فتح تبويب لملفات HTML فقط
+  if (openTabBtn && ["html","htm"].includes(ext)) {
+    openTabBtn.href = fileUrl;
+    openTabBtn.style.display = "inline-flex";
+  }
+  return;
+}
   // JSON (عرض منسق داخل إطار العارض)
   else if (fileExtension === "json") {
     try {
@@ -1018,6 +1033,7 @@ async function displayFile(filename, filepath, activeListItem) {
 </script>
 </body>
 </html>
+
 
 
 
