@@ -483,6 +483,46 @@
   font-size: 0.95em;
   line-height: 1.55;
 }
+      /* جعل العارض يمدد المحتوى بدل التمركز (مهم لـ JSON) */
+#viewer {
+  align-items: stretch;
+}
+
+/* عارض JSON داخل نفس إطار #viewer */
+.json-viewer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: auto;
+  white-space: pre;
+  direction: ltr;
+  text-align: left;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#open-tab-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: var(--secondary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: 600;
+  margin-left: 10px;
+}
+#open-tab-btn i {
+  margin-left: 10px;
+}
+#open-tab-btn:hover {
+  background-color: var(--primary-color);
+}
 </style>
   </head>
   <body>
@@ -552,6 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileListElement = document.getElementById("file-list");
   const viewerElement = document.getElementById("viewer");
   const downloadBtn = document.getElementById("download-btn");
+  const openTabBtn = document.getElementById("open-tab-btn");
   const filterElement = document.getElementById("file-filter");
   const searchElement = document.getElementById("search-input");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
@@ -856,74 +897,99 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function displayFile(filename, filepath, activeRow) {
-    document.querySelectorAll("#file-list tr").forEach((item) => item.classList.remove("active"));
-    activeRow.classList.add("active");
+function encodePath(path) {
+  // مهم: لا نستخدم encodeURIComponent على المسار كامل لأنه يكسر "/"
+  return path.split("/").map(encodeURIComponent).join("/");
+}
 
-    viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
-    downloadBtn.style.display = "none";
+async function displayFile(filename, filepath, activeListItem) {
+  document.querySelectorAll("#file-list tr").forEach((item) => item.classList.remove("active"));
+  activeListItem.classList.add("active");
 
-    const ext = filename.split(".").pop().toLowerCase();
-    const encodedPath = toUrlPath(filepath);
-    const fileUrl = `documents/${encodedPath}`;
+  viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
+  downloadBtn.style.display = "none";
+  if (openTabBtn) openTabBtn.style.display = "none";
 
-    // زر التحميل
-    downloadBtn.href = fileUrl;
-    downloadBtn.style.display = "inline-flex";
+  const fileExtension = filename.split(".").pop().toLowerCase();
 
-    // JSON Viewer
-    if (ext === "json") {
-      displayJson(fileUrl);
-      return;
+  // استخدم مسار مُرمّز حتى لا تتعطل المسافات/العربي
+  const fileUrlForDownload = `documents/${encodePath(filepath)}`;
+
+  let viewerContent = "";
+
+  // PDF / HTML
+  if (fileExtension === "pdf" || ["html", "htm"].includes(fileExtension)) {
+    viewerContent = `<iframe src="${fileUrlForDownload}"></iframe>`;
+
+    // زر فتح تبويب لملفات HTML فقط
+    if (openTabBtn && ["html", "htm"].includes(fileExtension)) {
+      openTabBtn.href = fileUrlForDownload;
+      openTabBtn.style.display = "inline-flex";
     }
-
-    // PDF/HTML/TXT
-    if (ext === "pdf" || ["html","htm","txt"].includes(ext)) {
-      viewerElement.innerHTML = `<iframe src="${fileUrl}"></iframe>`;
-      return;
-    }
-
-    // Images
-    if (["png","jpg","jpeg","gif","svg","webp","bmp"].includes(ext)) {
-      viewerElement.innerHTML = `<img src="${fileUrl}" alt="معاينة ${filename}">`;
-      return;
-    }
-
-    // Video
-    if (["mp4","mov","webm","avi","mkv"].includes(ext)) {
-      viewerElement.innerHTML = `
-        <video controls autoplay style="max-width:100%; max-height:100%; border-radius:10px;">
-          <source src="${fileUrl}">
-          <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
-        </video>`;
-      return;
-    }
-
-    // Audio
-    if (["mp3","wav","ogg","aac","flac"].includes(ext)) {
-      viewerElement.innerHTML = `
-        <audio controls autoplay style="width:80%; margin:20px;">
-          <source src="${fileUrl}">
-          <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
-        </audio>`;
-      return;
-    }
-
-    // Office files via Office Online viewer
-    if (["docx","pptx","xlsx","doc","ppt","xls","dotx","dotm","potx","potm","xltx","xltm"].includes(ext)) {
-      const username = window.location.hostname.split(".")[0];
-      const repo = window.location.pathname.split("/")[1];
-
-      // مهم: لا تستخدم encodeURIComponent على كامل المسار لأنه يكسر "/"
-      const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/${BRANCH}/documents/${encodedPath}`;
-      const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(rawFileUrl)}`;
-
-      viewerElement.innerHTML = `<iframe src="${viewerUrl}"></iframe>`;
-      return;
-    }
-
-    viewerElement.innerHTML = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
   }
+  // JSON (عرض منسق داخل إطار العارض)
+  else if (fileExtension === "json") {
+    try {
+      const res = await fetch(fileUrlForDownload, { cache: "no-store" });
+      const text = await res.text();
+      let pretty = text;
+      try {
+        pretty = JSON.stringify(JSON.parse(text), null, 2);
+      } catch (_) {
+        // لو الملف ليس JSON صحيح، اعرضه كنص كما هو
+      }
+      // منع HTML injection + ضمان عدم تجاوز الإطار
+      const escaped = pretty.replace(/[&<>]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+      viewerContent = `<pre class="json-viewer">${escaped}</pre>`;
+  } catch (e) {
+      viewerContent = `<div class="loader-message" style="color:#e74c3c;">تعذر تحميل ملف JSON.</div>`;
+    }
+  }
+  // صور
+  else if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(fileExtension)) {
+    viewerContent = `<img src="${fileUrlForDownload}" alt="معاينة ${filename}">`;
+  }
+  // فيديو
+  else if (["mp4", "mov", "webm", "avi", "mkv"].includes(fileExtension)) {
+    viewerContent = `<video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
+      <source src="${fileUrlForDownload}">
+      <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
+    </video>`;
+  }
+  // صوت
+  else if (["mp3", "wav", "ogg", "aac", "flac"].includes(fileExtension)) {
+    viewerContent = `<audio controls autoplay style="width: 80%; margin: 20px;">
+      <source src="${fileUrlForDownload}">
+      <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
+    </audio>`;
+  }
+  // TXT
+  else if (fileExtension === "txt") {
+    viewerContent = `<iframe src="${fileUrlForDownload}"></iframe>`;
+  }
+  // ملفات Office
+  else if ([
+      "docx","pptx","xlsx","doc","ppt","xls","dotx","dotm","potx","potm","xltx","xltm"
+    ].includes(fileExtension)
+  ) {
+    const username = window.location.hostname.split(".")[0];
+    const repo = window.location.pathname.split("/")[1];
+
+    // إصلاح مهم: لا تستخدم encodeURIComponent(filepath) لأنه يكسر "/"
+    const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${encodePath(filepath)}`;
+    const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(rawFileUrl)}`;
+    viewerContent = `<iframe src="${viewerUrl}"></iframe>`;
+  }
+  // غير مدعوم
+  else {
+    viewerContent = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
+  }
+
+  viewerElement.innerHTML = viewerContent;
+
+  downloadBtn.href = fileUrlForDownload;
+  downloadBtn.style.display = "inline-flex";
+}
 
   async function boot() {
     initDarkMode();
@@ -952,6 +1018,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
