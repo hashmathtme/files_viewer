@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</title>
+    <title>مستعرض الملفات الخاصة بالملتقى</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -516,8 +516,8 @@
       <main class="main-content">
         <div class="viewer-controls">
           <div class="header-info">
-            <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
-            <span class="programmer-credit">برمجة :NMO </span>
+            <h2>مستعرض الملفات الخاصة بالملتقى</h2>
+            <span class="programmer-credit">github</span>
           </div>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
@@ -542,7 +542,7 @@
         const filterElement = document.getElementById("file-filter");
         const searchElement = document.getElementById("search-input");
         const darkModeToggle = document.getElementById("dark-mode-toggle");
-        const defaultFile = "تعليمات.pdf"; // اسم الملف الافتراضي إذا كان موجوداً في مجلد 'documents'
+        const defaultFile = "https://raw.githubusercontent.com/hashmathtme/files_viewer/refs/heads/main/documents/%D8%B4%D8%B9%D8%A7%D8%B1%20%D8%A7%D9%84%D9%85%D9%84%D8%AA%D9%82%D9%89%20%D9%88%D8%A7%D9%84%D9%88%D8%B2%D8%A7%D8%B1%D8%A9/moltaga.png"; // اسم الملف الافتراضي إذا كان موجوداً في مجلد 'documents'
 
         // الملفات التي يجب تثبيتها في أعلى القائمة (تظهر أولاً)
         const pinnedFiles = [
@@ -552,13 +552,9 @@
 
         // قائمة مجلدات الفصول الدراسية الجديدة
         const classFolders = [
-            "أول ابتدائي",
-            "ثاني ابتدائي",
-            "ثالث ابتدائي",
-            "رابع ابتدائي",
-            "خامس ابتدائي",
-            "سادس ابتدائي",
-        ];
+            "أرشيف توزيع المناهج",
+            "شعار الملتقى والوزارة",
+           ];
 
         // --- 1. وظيفة الوضع الليلي ---
         function initDarkMode() {
@@ -1008,3 +1004,4 @@
     </script>
   </body>
 </html>
+
