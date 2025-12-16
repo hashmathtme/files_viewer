@@ -547,168 +547,209 @@
         <footer class="footer"></footer>
       </main>
     </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const fileListElement = document.getElementById("file-list");
+  const viewerElement = document.getElementById("viewer");
+  const downloadBtn = document.getElementById("download-btn");
+  const filterElement = document.getElementById("file-filter");
+  const searchElement = document.getElementById("search-input");
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const fileListElement = document.getElementById("file-list");
-        const viewerElement = document.getElementById("viewer");
-        const downloadBtn = document.getElementById("download-btn");
-        const filterElement = document.getElementById("file-filter");
-        const searchElement = document.getElementById("search-input");
-        const darkModeToggle = document.getElementById("dark-mode-toggle");
-        const defaultFile = "./أرشيف توزيع المناهج/moltaga.png"; // اسم الملف الافتراضي إذا كان موجوداً في مجلد 'documents'
+  // ملف الفهرس الثابت (يتولد بواسطة GitHub Actions)
+  const DOCS_INDEX_URL = "documents/index.json";
 
-        // الملفات التي يجب تثبيتها في أعلى القائمة (تظهر أولاً)
-        const pinnedFiles = [
-          "./أرشيف توزيع المناهج/moltaga.png",
-          // "ملف مهم آخر.docx"
-        ];
+  // اسم/مسار الملف الافتراضي داخل documents
+  const defaultFilePath = "تعليمات.pdf";
 
-        // قائمة مجلدات الفصول الدراسية الجديدة
-        const classFolders = [
-            "أرشيف توزيع المناهج",
-            "شعار الملتقى والوزارة",
-           ];
+  // ملفات مثبتة (اكتب المسار داخل documents)
+  const pinnedPaths = [
+    "تعليمات.pdf"
+  ];
 
-        // --- 1. وظيفة الوضع الليلي ---
-        function initDarkMode() {
-          const isDark =
-            localStorage.getItem("dark-mode") === "true" ||
-            (window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches &&
-              localStorage.getItem("dark-mode") !== "false");
+  function initDarkMode() {
+    const isDark =
+      localStorage.getItem("dark-mode") === "true" ||
+      (window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches &&
+        localStorage.getItem("dark-mode") !== "false");
 
-          if (isDark) {
-            document.body.classList.add("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-          } else {
-            document.body.classList.remove("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-          }
-        }
+    if (isDark) {
+      document.body.classList.add("dark-mode");
+      darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    } else {
+      document.body.classList.remove("dark-mode");
+      darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    }
+  }
 
-        darkModeToggle.addEventListener("click", () => {
-          document.body.classList.toggle("dark-mode");
-          const isDark = document.body.classList.contains("dark-mode");
-          localStorage.setItem("dark-mode", isDark);
-          darkModeToggle.innerHTML = isDark
-            ? '<i class="fa-solid fa-sun"></i>'
-            : '<i class="fa-solid fa-moon"></i>';
+  darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("dark-mode", isDark);
+    darkModeToggle.innerHTML = isDark
+      ? '<i class="fa-solid fa-sun"></i>'
+      : '<i class="fa-solid fa-moon"></i>';
+  });
+
+  function getFileType(filename) {
+    const extension = filename.split(".").pop().toLowerCase();
+    if (extension === "pdf") return "pdf";
+    if (["doc", "docx"].includes(extension)) return "doc";
+    if (["xls", "xlsx"].includes(extension)) return "xls";
+    if (["ppt", "pptx"].includes(extension)) return "ppt";
+    if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(extension)) return "img";
+    if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension)) return "video";
+    if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension)) return "audio";
+    if (extension === "txt") return "txt";
+    if (["html", "htm"].includes(extension)) return "html";
+    if (extension === "json") return "json";
+    return "other";
+  }
+
+  function getFileIconClass(filename) {
+    const extension = filename.split(".").pop().toLowerCase();
+    const solid = "fa-solid ";
+    if (extension === "pdf") return solid + "fa-file-pdf";
+    if (["doc", "docx"].includes(extension)) return solid + "fa-file-word";
+    if (["xls", "xlsx"].includes(extension)) return solid + "fa-file-excel";
+    if (["ppt", "pptx"].includes(extension)) return solid + "fa-file-powerpoint";
+    if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(extension)) return solid + "fa-file-image";
+    if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension)) return solid + "fa-file-video";
+    if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension)) return solid + "fa-file-audio";
+    if (extension === "txt") return solid + "fa-file-lines";
+    if (["html", "htm"].includes(extension)) return solid + "fa-file-code";
+    if (extension === "json") return solid + "fa-brackets-curly";
+    return solid + "fa-file-archive";
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function buildDocUrl(filepath) {
+    // encodeURI يحافظ على / ويحوّل المسافات وعربي… بشكل صحيح في العادة
+    const safe = encodeURI(filepath).replaceAll("#", "%23");
+    return `documents/${safe}`;
+  }
+
+  function toggleFolderVisibility(event) {
+    const headerRow = event.currentTarget;
+    const folderName = headerRow.dataset.folderName;
+    const isExpanded = headerRow.dataset.isExpanded === "true";
+
+    // أكورديون: اقفل الباقي
+    document.querySelectorAll("#file-list .folder-header").forEach(otherHeader => {
+      if (otherHeader !== headerRow) {
+        otherHeader.dataset.isExpanded = "false";
+        otherHeader.querySelector(".arrow-icon").style.transform = "rotate(0deg)";
+        const otherFolder = otherHeader.dataset.folderName;
+        document.querySelectorAll(`#file-list tr[data-folder="${otherFolder}"]`).forEach(r => {
+          r.style.display = "none";
         });
+      }
+    });
 
-        // دالة التحكم بفتح وإغلاق القائمة المنسدلة للمجلدات
-        function toggleFolderVisibility(event) {
-            const headerRow = event.currentTarget;
-            const folderName = headerRow.dataset.folderName;
-            const isExpanded = headerRow.dataset.isExpanded === "true";
-
-            // إغلاق جميع المجلدات أولاً (سلوك الأكورديون)
-            document.querySelectorAll("#file-list .folder-header").forEach(otherHeader => {
-                if (otherHeader !== headerRow) {
-                    otherHeader.dataset.isExpanded = "false";
-                    otherHeader.querySelector('.arrow-icon').style.transform = 'rotate(0deg)';
-
-                    const otherFolderName = otherHeader.dataset.folderName;
-                    document.querySelectorAll(`#file-list tr[data-folder="${otherFolderName}"]`).forEach(fileRow => {
-                        fileRow.style.display = 'none';
-                    });
-                }
-            });
-
-            if (isExpanded) {
-                // إذا كان مفتوحاً، أغلقه
-                headerRow.dataset.isExpanded = "false";
-                headerRow.querySelector('.arrow-icon').style.transform = 'rotate(0deg)';
-                document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(fileRow => {
-                    fileRow.style.display = 'none';
-                });
-            } else {
-                // إذا كان مغلقاً، افتحه
-                headerRow.dataset.isExpanded = "true";
-                headerRow.querySelector('.arrow-icon').style.transform = 'rotate(-90deg)';
-
-                // عرض ملفات المجلد المحدد
-                document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(fileRow => {
-                    // فقط اعرض الملفات إذا لم تكن مخفية بسبب البحث (خاصية data-isHiddenBySearch)
-                    if (fileRow.dataset.isHiddenBySearch !== "true") {
-                        fileRow.style.display = '';
-                    }
-                });
-            }
-        }
-
-        // -----------------------------
-// ---------- جلب الفهرس من ملف ثابت (بدون GitHub API) ----------
-async function fetchDocumentsIndex() {
-  // إضافة ?v لمنع كاش مزعج عند بعض المتصفحات/CDN
-  const url = `documents/index.json?v=${Date.now()}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error(`لم يتم العثور على documents/index.json (HTTP ${res.status}). تأكد أن Workflow أنشأ الملف.`);
-  }
-  const data = await res.json();
-  // تنظيف بسيط
-  return (Array.isArray(data) ? data : [])
-    .filter(x => x && x.name && x.path)
-    .map(x => ({
-      name: x.name,
-      path: x.path,
-      folder: x.folder || "ملفات عامة"
-    }));
-}
-
-async function fetchAndDisplayFiles() {
-  if (!window.location.hostname.includes("github.io")) {
-    viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">هذا العارض مصمم للعمل على مواقع GitHub Pages فقط.</div>`;
-    return;
+    if (isExpanded) {
+      headerRow.dataset.isExpanded = "false";
+      headerRow.querySelector(".arrow-icon").style.transform = "rotate(0deg)";
+      document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(r => {
+        r.style.display = "none";
+      });
+    } else {
+      headerRow.dataset.isExpanded = "true";
+      headerRow.querySelector(".arrow-icon").style.transform = "rotate(-90deg)";
+      document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(r => {
+        if (r.dataset.isHiddenBySearch !== "true") r.style.display = "";
+      });
+    }
   }
 
-  try {
-    viewerElement.innerHTML = `<div class="loader-message">جاري تحميل قائمة الملفات...</div>`;
+  async function loadIndex() {
+    const res = await fetch(DOCS_INDEX_URL, { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error(
+        `لم أجد ملف الفهرس ${DOCS_INDEX_URL}. تأكد من إضافة الـ workflow وتشغيله أو إنشاء الملف يدوياً. (HTTP ${res.status})`
+      );
+    }
+    const data = await res.json();
+    const paths = Array.isArray(data.files) ? data.files : [];
+    return paths;
+  }
 
-    let allFilesData = await fetchDocumentsIndex();
+  function buildFilesData(paths) {
+    const filesData = paths
+      .filter(p => typeof p === "string" && p.trim() !== "")
+      .map(p => {
+        const parts = p.split("/");
+        const name = parts[parts.length - 1];
+        const folder = parts.length > 1 ? parts[0] : "ملفات عامة";
+        return { name, path: p, folder };
+      })
+      // تجاهل أي ملفات مخفية
+      .filter(f => !f.name.startsWith("."));
 
-    // تثبيت ملفات أعلى القائمة (بنفس منطقك)
-    const pinnedSet = new Set(pinnedFiles);
-    const pinnedFound = [];
+    // فصل المثبت
+    const pinnedSet = new Set(pinnedPaths);
+    const pinned = [];
     const rest = [];
-
-    for (const f of allFilesData) {
-      if (pinnedSet.has(f.name)) pinnedFound.push({ ...f, folder: "⭐ ملفات مثبتة" });
+    for (const f of filesData) {
+      if (pinnedSet.has(f.path)) pinned.push(f);
       else rest.push(f);
     }
 
+    // ترتيب المثبت حسب pinnedPaths
+    pinned.sort((a, b) => pinnedPaths.indexOf(a.path) - pinnedPaths.indexOf(b.path));
+
+    // ترتيب الباقي حسب المجلد ثم الاسم
     rest.sort((a, b) => {
       if (a.folder !== b.folder) return a.folder.localeCompare(b.folder, "ar");
       return a.name.localeCompare(b.name, "ar");
     });
 
-    const filesData = [...pinnedFound, ...rest];
+    // أعد إدخال المثبت في “مجلد” خاص أعلى
+    const final = [];
+    if (pinned.length) {
+      for (const f of pinned) final.push({ ...f, folder: "📌 مثبت" });
+    }
+    for (const f of rest) final.push(f);
 
-    if (filesData.length === 0) {
-      viewerElement.innerHTML = `<div class="loader-message">لا توجد ملفات داخل documents.</div>`;
-      return;
+    return final;
+  }
+
+  function renderTable(filesData) {
+    // تجميع حسب folder
+    const byFolder = {};
+    for (const f of filesData) {
+      if (!byFolder[f.folder]) byFolder[f.folder] = [];
+      byFolder[f.folder].push(f);
     }
 
-    // تجميع حسب المجلد
-    const filesByFolder = filesData.reduce((acc, fileData) => {
-      const folder = fileData.folder || "ملفات عامة";
-      (acc[folder] ||= []).push(fileData);
-      return acc;
-    }, {});
+    // ترتيب أسماء المجلدات (مع تثبيت 📌 مثبت أولاً)
+    const folderNames = Object.keys(byFolder).sort((a, b) => {
+      if (a === "📌 مثبت") return -1;
+      if (b === "📌 مثبت") return 1;
+      return a.localeCompare(b, "ar");
+    });
 
     fileListElement.innerHTML = "";
+
     let isFirstFolder = true;
 
-    for (const folderName in filesByFolder) {
-      const folderFiles = filesByFolder[folderName];
+    for (const folderName of folderNames) {
+      const folderFiles = byFolder[folderName];
 
-      const folderHeaderTr = document.createElement("tr");
-      folderHeaderTr.className = "folder-header";
-      folderHeaderTr.dataset.folderName = folderName;
-      folderHeaderTr.dataset.isExpanded = isFirstFolder ? "true" : "false";
-
-      folderHeaderTr.innerHTML = `
+      // Header
+      const header = document.createElement("tr");
+      header.className = "folder-header";
+      header.dataset.folderName = folderName;
+      header.dataset.isExpanded = isFirstFolder ? "true" : "false";
+      header.innerHTML = `
         <td colspan="3" class="folder-header-content">
           <div class="folder-title">
             <i class="fa-solid fa-chevron-left arrow-icon"></i>
@@ -718,250 +759,212 @@ async function fetchAndDisplayFiles() {
           </div>
         </td>
       `;
-      fileListElement.appendChild(folderHeaderTr);
-      folderHeaderTr.addEventListener("click", toggleFolderVisibility);
+      fileListElement.appendChild(header);
+      header.addEventListener("click", toggleFolderVisibility);
 
+      // Rows
       let seq = 1;
-      folderFiles.forEach((fileData) => {
+      for (const f of folderFiles) {
         const tr = document.createElement("tr");
-        const fileType = getFileType(fileData.name);
+        const fileType = getFileType(f.name);
 
-        tr.dataset.filename = fileData.name;
-        tr.dataset.filepath = fileData.path;
+        tr.dataset.filename = f.name;
+        tr.dataset.filepath = f.path;
         tr.dataset.filetype = fileType;
         tr.dataset.folder = folderName;
         tr.dataset.isHiddenBySearch = "false";
 
         if (!isFirstFolder) tr.style.display = "none";
 
-        const tdSeq = document.createElement("td");
-        tdSeq.className = "col-seq";
-        tdSeq.textContent = seq++;
+        tr.innerHTML = `
+          <td class="col-seq">${seq++}</td>
+          <td class="col-name">${escapeHtml(f.name.substring(0, f.name.lastIndexOf(".")) || f.name)}</td>
+          <td class="col-type"><i class="${getFileIconClass(f.name)}"></i></td>
+        `;
 
-        const tdName = document.createElement("td");
-        tdName.className = "col-name";
-        tdName.textContent =
-          fileData.name.substring(0, fileData.name.lastIndexOf(".")) || fileData.name;
-
-        const tdType = document.createElement("td");
-        tdType.className = "col-type";
-        const icon = document.createElement("i");
-        icon.className = getFileIconClass(fileData.name);
-        tdType.appendChild(icon);
-
-        tr.appendChild(tdSeq);
-        tr.appendChild(tdName);
-        tr.appendChild(tdType);
-
-        tr.addEventListener("click", () => displayFile(fileData.name, fileData.path, tr));
+        tr.addEventListener("click", () => displayFile(f.name, f.path, tr));
         fileListElement.appendChild(tr);
-      });
+      }
 
       isFirstFolder = false;
     }
+  }
 
-    // اختيار افتراضي
-    const defaultFileElement = Array.from(fileListElement.children)
-      .find((li) => li.dataset.filename === defaultFile);
+  function searchAndFilterFiles() {
+    const selectedType = filterElement.value;
+    const searchTerm = searchElement.value.toLowerCase();
 
-    if (defaultFileElement) defaultFileElement.click();
-    else {
-      const firstFileRow = fileListElement.querySelector("tr:not(.folder-header)");
-      if (firstFileRow) displayFile(firstFileRow.dataset.filename, firstFileRow.dataset.filepath, firstFileRow);
+    const rows = document.querySelectorAll("#file-list tr:not(.folder-header)");
+    const visibleFolders = new Set();
+
+    rows.forEach((row) => {
+      const fileName = (row.dataset.filename || "").toLowerCase();
+      const filePath = (row.dataset.filepath || "").toLowerCase();
+      const fileType = row.dataset.filetype;
+      const folderName = row.dataset.folder;
+
+      const typeMatch = selectedType === "all" || fileType === selectedType;
+      const searchMatch = fileName.includes(searchTerm) || filePath.includes(searchTerm);
+
+      if (typeMatch && searchMatch) {
+        row.style.display = "";
+        row.dataset.isHiddenBySearch = "false";
+        visibleFolders.add(folderName);
+      } else {
+        row.style.display = "none";
+        row.dataset.isHiddenBySearch = "true";
+      }
+    });
+
+    document.querySelectorAll("#file-list .folder-header").forEach(folderRow => {
+      const folderName = folderRow.dataset.folderName;
+      const hasVisible = visibleFolders.has(folderName);
+
+      if (searchTerm !== "" || selectedType !== "all") {
+        if (hasVisible) {
+          folderRow.style.display = "";
+          folderRow.dataset.isExpanded = "true";
+          folderRow.querySelector(".arrow-icon").style.transform = "rotate(-90deg)";
+        } else {
+          folderRow.style.display = "none";
+        }
+      } else {
+        folderRow.style.display = "";
+        if (folderRow.dataset.isExpanded === "false") {
+          document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(r => {
+            r.style.display = "none";
+          });
+        } else {
+          document.querySelectorAll(`#file-list tr[data-folder="${folderName}"][data-isHiddenBySearch="false"]`).forEach(r => {
+            r.style.display = "";
+          });
+        }
+      }
+    });
+  }
+
+  async function displayFile(filename, filepath, activeRow) {
+    document.querySelectorAll("#file-list tr").forEach((r) => r.classList.remove("active"));
+    activeRow.classList.add("active");
+
+    viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
+    downloadBtn.style.display = "none";
+
+    const fileExtension = filename.split(".").pop().toLowerCase();
+    const fileUrl = buildDocUrl(filepath);
+
+    // زر تحميل
+    downloadBtn.href = fileUrl;
+    downloadBtn.style.display = "inline-flex";
+
+    // عرض
+    if (fileExtension === "pdf" || ["html", "htm"].includes(fileExtension)) {
+      viewerElement.innerHTML = `<iframe src="${fileUrl}"></iframe>`;
+      return;
     }
 
-    filterElement.addEventListener("change", searchAndFilterFiles);
-    searchElement.addEventListener("input", searchAndFilterFiles);
+    if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(fileExtension)) {
+      viewerElement.innerHTML = `<img src="${fileUrl}" alt="معاينة ${escapeHtml(filename)}">`;
+      return;
+    }
 
-  } catch (error) {
-    viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">فشل تحميل قائمة الملفات:<br>${error.message}</div>`;
+    if (["mp4", "mov", "webm", "avi", "mkv"].includes(fileExtension)) {
+      viewerElement.innerHTML = `
+        <video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
+          <source src="${fileUrl}">
+          <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
+        </video>`;
+      return;
+    }
+
+    if (["mp3", "wav", "ogg", "aac", "flac"].includes(fileExtension)) {
+      viewerElement.innerHTML = `
+        <audio controls autoplay style="width: 80%; margin: 20px;">
+          <source src="${fileUrl}">
+          <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
+        </audio>`;
+      return;
+    }
+
+    // TXT و JSON: عرض نص مباشر (مع JSON pretty-print)
+    if (fileExtension === "txt" || fileExtension === "json") {
+      try {
+        const res = await fetch(fileUrl, { cache: "no-store" });
+        const text = await res.text();
+
+        let content = text;
+        if (fileExtension === "json") {
+          try {
+            content = JSON.stringify(JSON.parse(text), null, 2);
+          } catch {
+            // إذا الملف ليس JSON صحيح، اعرضه كنص
+            content = text;
+          }
+        }
+
+        viewerElement.innerHTML = `
+          <div style="width:100%; height:100%; overflow:auto; padding:16px; box-sizing:border-box;">
+            <pre style="margin:0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 14px; line-height: 1.5; white-space: pre; direction:ltr; text-align:left;">${escapeHtml(content)}</pre>
+          </div>`;
+      } catch (e) {
+        viewerElement.innerHTML = `<div class="loader-message" style="color:#e74c3c;">تعذر تحميل الملف النصي.</div>`;
+      }
+      return;
+    }
+
+    // ملفات Office: استخدم Office Online Viewer على رابط GitHub Pages (بدون raw.githubusercontent)
+    if (["docx","pptx","xlsx","doc","ppt","xls","dotx","dotm","potx","potm","xltx","xltm"].includes(fileExtension)) {
+      const absoluteUrl = new URL(fileUrl, window.location.href).href;
+      const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(absoluteUrl)}`;
+      viewerElement.innerHTML = `<iframe src="${viewerUrl}"></iframe>`;
+      return;
+    }
+
+    viewerElement.innerHTML = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
   }
-}
 
-        function searchAndFilterFiles() {
-          const selectedType = filterElement.value;
-          const searchTerm = searchElement.value.toLowerCase();
-          const rows = document.querySelectorAll("#file-list tr:not(.folder-header)");
+  async function start() {
+    initDarkMode();
 
-          let visibleFolders = new Set(); // لتتبع المجلدات التي تحتوي على نتائج بحث مطابقة
-
-          rows.forEach((row) => {
-            const fileName = row.dataset.filename.toLowerCase();
-            const filePath = row.dataset.filepath.toLowerCase();
-            const fileType = row.dataset.filetype;
-            const folderName = row.dataset.folder; // اسم المجلد
-
-            const typeMatch =
-              selectedType === "all" || fileType === selectedType;
-            const searchMatch = fileName.includes(searchTerm) || filePath.includes(searchTerm);
-
-            if (typeMatch && searchMatch) {
-              row.style.display = "";
-              row.dataset.isHiddenBySearch = "false";
-              visibleFolders.add(folderName);
-            } else {
-              row.style.display = "none";
-              row.dataset.isHiddenBySearch = "true";
-            }
-          });
-
-          // **منطق عرض/إخفاء عناوين المجلدات وتعديل حالتها**
-          document.querySelectorAll("#file-list .folder-header").forEach(folderRow => {
-              const folderName = folderRow.dataset.folderName;
-              const hasVisibleFiles = visibleFolders.has(folderName);
-
-              if (searchTerm !== "" || selectedType !== "all") {
-                   // وضع البحث: أظهر فقط المجلدات التي تحتوي على نتائج واجعلها مفتوحة
-                   if (hasVisibleFiles) {
-                       folderRow.style.display = "";
-                       folderRow.dataset.isExpanded = "true";
-                       folderRow.querySelector('.arrow-icon').style.transform = 'rotate(-90deg)';
-                   } else {
-                       folderRow.style.display = "none";
-                   }
-              } else {
-                   // وضع العرض العادي (بعد مسح البحث): أظهر كل العناوين واحتفظ بحالة الطي/الفتح
-                   folderRow.style.display = "";
-
-                   // إذا كان المجلد مغلقًا، يجب إخفاء ملفاته حتى وإن كانت نتائج البحث فارغة
-                   if(folderRow.dataset.isExpanded === "false") {
-                        document.querySelectorAll(`#file-list tr[data-folder="${folderName}"]`).forEach(fileRow => {
-                           fileRow.style.display = 'none';
-                       });
-                   } else {
-                        // إذا كان مفتوحاً، أظهر جميع ملفاته (طالما لم تخفها التصفية الأخيرة)
-                        document.querySelectorAll(`#file-list tr[data-folder="${folderName}"][data-isHiddenBySearch="false"]`).forEach(fileRow => {
-                           fileRow.style.display = '';
-                       });
-                   }
-              }
-          });
-        }
-
-        function getFileIconClass(filename) {
-          const extension = filename.split(".").pop().toLowerCase();
-          const solid = "fa-solid ";
-          if (extension === "pdf") return solid + "fa-file-pdf";
-          if (["doc", "docx"].includes(extension))
-            return solid + "fa-file-word";
-          if (["xls", "xlsx"].includes(extension))
-            return solid + "fa-file-excel";
-          if (["ppt", "pptx"].includes(extension))
-            return solid + "fa-file-powerpoint";
-          if (
-            ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
-              extension
-            )
-          )
-            return solid + "fa-file-image";
-          // **إضافة أيقونات الفيديو والصوت**
-          if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension))
-            return solid + "fa-file-video";
-          if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension))
-            return solid + "fa-file-audio";
-          // ---------------------------------
-          if (extension === "txt") return solid + "fa-file-lines";
-          if (["html", "htm"].includes(extension))
-            return solid + "fa-file-code";
-          return solid + "fa-file-archive";
-        }
-
-        function getFileType(filename) {
-          const extension = filename.split(".").pop().toLowerCase();
-          if (extension === "pdf") return "pdf";
-          if (["doc", "docx"].includes(extension)) return "doc";
-          if (["xls", "xlsx"].includes(extension)) return "xls";
-          if (["ppt", "pptx"].includes(extension)) return "ppt";
-          if (
-            ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
-              extension
-            )
-          )
-            return "img";
-          // **إضافة أنواع الفيديو والصوت**
-          if (["mp4", "mov", "webm", "avi", "mkv"].includes(extension))
-            return "video";
-          if (["mp3", "wav", "ogg", "aac", "flac"].includes(extension))
-            return "audio";
-          // ---------------------------------
-          if (extension === "txt") return "txt";
-          if (["html", "htm"].includes(extension)) return "html";
-          return "other";
-        }
-        // داخل getFileType:
-        if (extension === "json") return "json";
-
-        // تم تحديث الدالة لتقبل المسار الكامل (filepath)
-       function safeEncodePath(path) {
-  // يحافظ على "/" ويشفّر المسافات والعربي بشكل صحيح
-  return encodeURI(path);
-}
-
-async function displayFile(filename, filepath, activeListItem) {
-  document.querySelectorAll("#file-list tr").forEach((item) => item.classList.remove("active"));
-  activeListItem.classList.add("active");
-
-  viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
-  downloadBtn.style.display = "none";
-
-  const fileExtension = filename.split(".").pop().toLowerCase();
-  const fileUrlForDownload = safeEncodePath(`documents/${filepath}`);
-
-  let viewerContent = "";
-
-  if (fileExtension === "json") {
     try {
-      const res = await fetch(fileUrlForDownload);
-      const text = await res.text();
-      let pretty = text;
-      try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch (_) {}
+      const paths = await loadIndex();
+      const filesData = buildFilesData(paths);
 
-      // Escape HTML
-      const escaped = pretty.replace(/[&<>]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
-      viewerContent = `<pre class="json-viewer">${escaped}</pre>`;
-    } catch (e) {
-      viewerContent = `<div class="loader-message" style="color:#e74c3c;">تعذر تحميل ملف JSON: ${e.message}</div>`;
+      if (!filesData.length) {
+        viewerElement.innerHTML = `<div class="loader-message">لا توجد ملفات داخل documents.</div>`;
+        return;
+      }
+
+      renderTable(filesData);
+
+      filterElement.addEventListener("change", searchAndFilterFiles);
+      searchElement.addEventListener("input", searchAndFilterFiles);
+
+      // افتح الملف الافتراضي إن وجد
+      let defaultRow = null;
+      document.querySelectorAll("#file-list tr:not(.folder-header)").forEach(r => {
+        if (r.dataset.filepath === defaultFilePath) defaultRow = r;
+      });
+
+      if (defaultRow) {
+        defaultRow.click();
+      } else {
+        const first = document.querySelector("#file-list tr:not(.folder-header)");
+        if (first) first.click();
+      }
+
+    } catch (err) {
+      viewerElement.innerHTML = `<div class="loader-message" style="color:#e74c3c;">${escapeHtml(err.message)}</div>`;
     }
-  } else if (fileExtension === "pdf" || ["html", "htm", "txt"].includes(fileExtension)) {
-    viewerContent = `<iframe src="${fileUrlForDownload}"></iframe>`;
-  } else if (["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(fileExtension)) {
-    viewerContent = `<img src="${fileUrlForDownload}" alt="معاينة ${filename}">`;
-  } else if (["mp4", "mov", "webm", "avi", "mkv"].includes(fileExtension)) {
-    viewerContent = `<video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
-      <source src="${fileUrlForDownload}">
-      <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
-    </video>`;
-  } else if (["mp3", "wav", "ogg", "aac", "flac"].includes(fileExtension)) {
-    viewerContent = `<audio controls autoplay style="width: 80%; margin: 20px;">
-      <source src="${fileUrlForDownload}">
-      <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
-    </audio>`;
-  } else if (["docx","pptx","xlsx","doc","ppt","xls","dotx","dotm","potx","potm","xltx","xltm"].includes(fileExtension)) {
-    const username = window.location.hostname.split(".")[0];
-    const repo = window.location.pathname.split("/").filter(Boolean)[0];
-
-    // إصلاح مهم: لا تستخدم encodeURIComponent على filepath لأنه يكسر "/"
-    const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${safeEncodePath(filepath)}`;
-    const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(rawFileUrl)}`;
-    viewerContent = `<iframe src="${viewerUrl}"></iframe>`;
-  } else {
-    viewerContent = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
   }
 
-  viewerElement.innerHTML = viewerContent;
-  downloadBtn.href = fileUrlForDownload;
-  downloadBtn.style.display = "inline-flex";
-}
-        // داخل getFileIconClass:
-if (extension === "json") return solid + "fa-brackets-curly";
+  start();
+});
+</script>
 
-        // --- 2. تنفيذ الوضع الليلي والتحميل ---
-        initDarkMode();
-        fetchAndDisplayFiles();
-      });
-    </script>
   </body>
 </html>
+
 
 
 
