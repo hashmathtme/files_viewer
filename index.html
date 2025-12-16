@@ -300,6 +300,7 @@
         flex-direction: column;
         overflow: visible;
         min-height: 100vh;
+        min-width: 0; /* مهم جدًا لمنع تمدد المحتوى خارج الصفحة */
       }
 
       .viewer-controls {
@@ -375,30 +376,29 @@
       }
 
       /* ====== العارض ====== */
-      #viewer {
-        flex-grow: 1;
-        background: var(--panel-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        box-shadow: var(--shadow-elevation);
-        position: relative;
+     #viewer {
+  flex-grow: 1;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-elevation);
+  position: relative;
 
-        /* مهم لحل تمدد JSON */
-        display: flex;
-        justify-content: stretch;
-        align-items: stretch;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
 
-        overflow: auto;
-        transition: background-color 0.3s, border-color 0.3s;
-        min-height: 500px;
-      }
+  overflow: auto;
+  transition: background-color 0.3s, border-color 0.3s;
+  min-height: 500px;
+  min-width: 0; /* مهم */
+}
 
-      /* مهم: يسمح لعناصر داخل flex ألا تكسر العرض */
-      #viewer > * {
-        min-width: 0;
-        min-height: 0;
-      }
-
+/* مهم لعناصر flex داخل العارض حتى لا “تفرض” عرضًا أكبر */
+#viewer > * {
+  min-width: 0;
+  min-height: 0;
+}
       #viewer iframe {
         width: 100%;
         height: 100%;
@@ -430,21 +430,28 @@
       }
 
       /* JSON viewer */
-      .json-viewer {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 18px;
-        box-sizing: border-box;
-        overflow: auto;
-        white-space: pre;
-        direction: ltr;
-        text-align: left;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          "Liberation Mono", "Courier New", monospace;
-        font-size: 0.95em;
-        line-height: 1.55;
-      }
+     .json-viewer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 18px;
+  box-sizing: border-box;
+  overflow: auto;
+
+  white-space: pre-wrap;     /* التفاف داخل العرض */
+  overflow-wrap: anywhere;   /* كسر أي سطر طويل جدًا */
+  word-break: break-word;
+
+  direction: ltr;
+  text-align: left;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+  line-height: 1.55;
+
+  color: var(--text-color);
+  background: var(--panel-bg);
+}
 
       .footer {
         padding: 15px 0 0 0;
@@ -977,3 +984,4 @@
     </script>
   </body>
 </html>
+
