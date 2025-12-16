@@ -1,0 +1,52 @@
+name: Generate documents index.json
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "documents/**"
+      - ".github/workflows/generate-documents-index.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate documents/index.json
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+
+          root = pathlib.Path("documents")
+          files = []
+
+          if root.exists():
+            for p in root.rglob("*"):
+              if p.is_file() and not p.name.startswith(".") and p.name != "index.json":
+                rel = p.relative_to(root).as_posix()
+                parts = rel.split("/")
+                folder = parts[0] if len(parts) > 1 else "ملفات عامة"
+                files.append({
+                  "name": p.name,
+                  "path": rel,
+                  "folder": folder
+                })
+
+          files.sort(key=lambda x: (x["folder"], x["name"]))
+          out = root / "index.json"
+          out.write_text(json.dumps(files, ensure_ascii=False, indent=2), encoding="utf-8")
+          print(f"Wrote {out} with {len(files)} files")
+          PY
+
+      - name: Commit index.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-generate documents/index.json"
+          file_pattern: "documents/index.json"
