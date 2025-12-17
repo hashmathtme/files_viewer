@@ -2,35 +2,35 @@
   "version": 5,
   "title": "توزيع الموضوعات الدراسية",
   "startDate": "2026-01-18",
-  "endDate": "2026-06-24",
+  "endDate": "2026-07-02",
   "days": [
     {
       "index": 1,
-      "topic": "الفصل ٧: القياس / النقود والزمن: التهيئة ",
+      "topic": " ‏التهيئة ",
       "gregorianDate": "2026-01-18T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 2,
-      "topic": " النقود (ريال، ريالان ،٥ريالات ،١٠ريالات ،٥٠ ريالا\")",
+      "topic": "زوايا المضلعات ",
       "gregorianDate": "2026-01-19T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 3,
-      "topic": "عد النقود ",
+      "topic": "زوايا المضلعات ",
       "gregorianDate": "2026-01-20T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 4,
-      "topic": "النقود (١٠٠ ريال)",
+      "topic": "‏ ‏ ‏معمل الجداول/ زوايا المضلعات",
       "gregorianDate": "2026-01-21T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 5,
-      "topic": "  ترتيب الأعمال اليومية ",
+      "topic": "‏متوازي الأضلاع",
       "gregorianDate": "2026-01-22T00:00:00.000Z",
       "isSpecial": false
     },
@@ -48,31 +48,31 @@
     },
     {
       "index": 8,
-      "topic": "الوقت بالساعات الكاملة ",
+      "topic": " ‏متوازي الأضلاع ",
       "gregorianDate": "2026-01-25T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 9,
-      "topic": "اختبار منتصف الفصل + مراجعة تراكمية ",
+      "topic": "‏تميز ‏متوازي الأضلاع",
       "gregorianDate": "2026-01-26T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 10,
-      "topic": "الوقت بنصف الساعة ",
+      "topic": "‏ ‏تميز متوازي الأضلاع",
       "gregorianDate": "2026-01-27T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 11,
-      "topic": "الوقت بنصف الساعة ",
+      "topic": "‏اختبار منتصف الفصل",
       "gregorianDate": "2026-01-28T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 12,
-      "topic": "تقدير الزمن ",
+      "topic": "‏المستطيل",
       "gregorianDate": "2026-01-29T00:00:00.000Z",
       "isSpecial": false
     },
@@ -90,31 +90,31 @@
     },
     {
       "index": 15,
-      "topic": "الوقت بربع ساعة ",
+      "topic": " ‏المستطيل ",
       "gregorianDate": "2026-02-01T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 16,
-      "topic": "أحل المسالة ابحث عن نمط",
+      "topic": "‏المعين و ‏المربع",
       "gregorianDate": "2026-02-02T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 17,
-      "topic": "الوقت لأقرب ٥ دقائق",
+      "topic": "‏المعين والمربع",
       "gregorianDate": "2026-02-03T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 18,
-      "topic": "الوقت لأقرب ٥ دقائق",
+      "topic": " شبه المنحرف والطائرة الورقية",
       "gregorianDate": "2026-02-04T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 19,
-      "topic": "اختبار الفصل ٧ + الاختبار التراكمي ",
+      "topic": "‏شبه المنحرف والطائرة الورقية",
       "gregorianDate": "2026-02-05T00:00:00.000Z",
       "isSpecial": false
     },
@@ -132,31 +132,31 @@
     },
     {
       "index": 22,
-      "topic": "الفصل ٨: الكسور: التهيئة",
+      "topic": "شبه المنحرف والطائرة الورقية ‏ ",
       "gregorianDate": "2026-02-08T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 23,
-      "topic": "                    كسور الوحدة ",
+      "topic": "اختبار الفصل الخامس / اختبار تراكمي ",
       "gregorianDate": "2026-02-09T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 24,
-      "topic": "        الكسور الدالة على أكثر من جزء ",
+      "topic": "‏التهيئة الفصل السادس",
       "gregorianDate": "2026-02-10T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 25,
-      "topic": "            أحل المسالة ارسم صورة ",
+      "topic": "‏المضلعات المتشابهة",
       "gregorianDate": "2026-02-11T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 26,
-      "topic": "الكسور المساوية للواحد ",
+      "topic": "‏المضلعات المتشابهة",
       "gregorianDate": "2026-02-12T00:00:00.000Z",
       "isSpecial": false
     },
@@ -174,31 +174,31 @@
     },
     {
       "index": 29,
-      "topic": "     اختبار منتصف الفصل + مراجعة تراكمية ",
+      "topic": " ‏ ‏المثلثات المتشابهة  ",
       "gregorianDate": "2026-02-15T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 30,
-      "topic": "مقارنة الكسور ",
+      "topic": "‏المثلثات المتشابهة",
       "gregorianDate": "2026-02-16T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 31,
-      "topic": "مقارنة الكسور ",
+      "topic": "‏المثلثات المتشابهة",
       "gregorianDate": "2026-02-17T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 32,
-      "topic": "الكسور كأجزاء من مجموعة ",
+      "topic": "‏اختبار منتصف الفصل",
       "gregorianDate": "2026-02-18T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 33,
-      "topic": "استقصاء حل المسالة ",
+      "topic": "‏      المستقيمات المتوازية والأجزاء المتناسبه",
       "gregorianDate": "2026-02-19T00:00:00.000Z",
       "isSpecial": false
     },
@@ -216,31 +216,31 @@
     },
     {
       "index": 36,
-      "topic": "اختبار الفصل ٨ + الاختبار التراكمي ",
+      "topic": " ‏                    ‏إجازة يوم التأسيس ",
       "gregorianDate": "2026-02-22T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 37,
-      "topic": "الفصل ٩: الاعداد حتى ١٠٠٠: التهيئة ",
+      "topic": "‏      المستقيمات المتوازية والأجزاء المتناسبه",
       "gregorianDate": "2026-02-23T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 38,
-      "topic": "المئات ",
+      "topic": "‏      المستقيمات المتوازية والأجزاء المتناسبه",
       "gregorianDate": "2026-02-24T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 39,
-      "topic": "الآحاد والعشرات والمئات ",
+      "topic": "‏عناصر المثلثات المتشابهة",
       "gregorianDate": "2026-02-25T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 40,
-      "topic": "أحل المسالة أنشئ قائمة ",
+      "topic": "‏عناصر المثلثات المتشابهة",
       "gregorianDate": "2026-02-26T00:00:00.000Z",
       "isSpecial": false
     },
@@ -258,31 +258,31 @@
     },
     {
       "index": 43,
-      "topic": "القيمة المنزلية للأعداد حتى ١٠٠٠",
+      "topic": " ‏عناصر المثلثات المتشابهة ",
       "gregorianDate": "2026-03-01T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 44,
-      "topic": "اختبار منتصف الفصل ٩ + مراجعة تراكمية ",
+      "topic": "‏معمل الهندسة / الكسريات",
       "gregorianDate": "2026-03-02T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 45,
-      "topic": "قراءة الآعداد حتى ١٠٠٠ وكتابتها ",
+      "topic": "‏اختبار الفصل ",
       "gregorianDate": "2026-03-03T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 46,
-      "topic": "قراءة الآعداد حتى ١٠٠٠ وكتابتها ",
+      "topic": "‏ اختبار تراكمي",
       "gregorianDate": "2026-03-04T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 47,
-      "topic": "مقارنة الأعداد ",
+      "topic": "‏ التهيئة الفصل السابع",
       "gregorianDate": "2026-03-05T00:00:00.000Z",
       "isSpecial": false
     },
@@ -300,31 +300,31 @@
     },
     {
       "index": 50,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-08T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 51,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-09T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 52,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-10T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 53,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-11T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 54,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏                         إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-12T00:00:00.000Z",
       "isSpecial": false
     },
@@ -342,31 +342,31 @@
     },
     {
       "index": 57,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": " ‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-15T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 58,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-16T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 59,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-17T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 60,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-18T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 61,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-19T00:00:00.000Z",
       "isSpecial": false
     },
@@ -384,31 +384,31 @@
     },
     {
       "index": 64,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-22T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 65,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-23T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 66,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-24T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 67,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-25T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 68,
-      "topic": "إجازة عيد الفطر المبارك ",
+      "topic": "‏إجازة عيد الفطر المبارك",
       "gregorianDate": "2026-03-26T00:00:00.000Z",
       "isSpecial": false
     },
@@ -426,31 +426,31 @@
     },
     {
       "index": 71,
-      "topic": "ترتيب الأعداد ",
+      "topic": " ‏الانعكاس ",
       "gregorianDate": "2026-03-29T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 72,
-      "topic": "ترتيب الأعداد ",
+      "topic": "‏الانعكاس",
       "gregorianDate": "2026-03-30T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 73,
-      "topic": "الأنماط العددية ",
+      "topic": "الإزاحة/ ‏الانسحاب",
       "gregorianDate": "2026-03-31T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 74,
-      "topic": "الأنماط العددية ",
+      "topic": "الإزاحة /الانسحاب ‏ ",
       "gregorianDate": "2026-04-01T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 75,
-      "topic": "اختبار الفصل ٩+ الاختبار التراكمي ",
+      "topic": "‏ معمل الهندسة / الدوران ",
       "gregorianDate": "2026-04-02T00:00:00.000Z",
       "isSpecial": false
     },
@@ -468,31 +468,31 @@
     },
     {
       "index": 78,
-      "topic": "       الفصل ١٠: الأشكال الهندسية: التهيئة        ",
+      "topic": " ‏الدوران ",
       "gregorianDate": "2026-04-05T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 79,
-      "topic": "المجسمات ",
+      "topic": "‏اختبار منتصف الفصل",
       "gregorianDate": "2026-04-06T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 80,
-      "topic": "الأوجه والأحرف والرؤوس",
+      "topic": "‏معمل الحاسبة البيانية/‏تركيب التحويلات",
       "gregorianDate": "2026-04-07T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 81,
-      "topic": "الأشكال المستوية ",
+      "topic": "‏تركيب التحويلات الهندسية",
       "gregorianDate": "2026-04-08T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 82,
-      "topic": "أحل المسالة أبحث عن نمط ",
+      "topic": "‏تركيب التحويلات الهندسية",
       "gregorianDate": "2026-04-09T00:00:00.000Z",
       "isSpecial": false
     },
@@ -510,31 +510,31 @@
     },
     {
       "index": 85,
-      "topic": "اختبار منتصف الفصل + مراجعة تراكمية ",
+      "topic": " ‏ ‏معمل الهندسة /‏التبليط ",
       "gregorianDate": "2026-04-12T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 86,
-      "topic": "الأشكال المستوية: الأضلاع والرؤوس ",
+      "topic": "‏التماثل",
       "gregorianDate": "2026-04-13T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 87,
-      "topic": "مقارنة الأشكال الهندسية ",
+      "topic": "‏التماثل",
       "gregorianDate": "2026-04-14T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 88,
-      "topic": "تكوين الأشكال ",
+      "topic": "‏التمدد",
       "gregorianDate": "2026-04-15T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 89,
-      "topic": "أختبارالفصل ١٠+ الاختبار التراكمي ",
+      "topic": "‏التمدد",
       "gregorianDate": "2026-04-16T00:00:00.000Z",
       "isSpecial": false
     },
@@ -552,31 +552,31 @@
     },
     {
       "index": 92,
-      "topic": "الفصل ١١: القياس: الطول والمساحة / التهيئة ",
+      "topic": " ‏اختبار الفصل",
       "gregorianDate": "2026-04-19T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 93,
-      "topic": "وحدات الطول غير القياسية ",
+      "topic": "‏ الاختبار التراكمي",
       "gregorianDate": "2026-04-20T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 94,
-      "topic": "أحل المسالة أخمن ثم أتحقق ",
+      "topic": "‏ التهيئة الفصل الثامن",
       "gregorianDate": "2026-04-21T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 95,
-      "topic": "قياس الأطوال بالسنتمترات ",
+      "topic": "‏ الدائرة ومحيطها",
       "gregorianDate": "2026-04-22T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 96,
-      "topic": "استعمال مسطرة السنتمترات ",
+      "topic": "‏ الدائرة ومحيطها",
       "gregorianDate": "2026-04-23T00:00:00.000Z",
       "isSpecial": false
     },
@@ -594,31 +594,31 @@
     },
     {
       "index": 99,
-      "topic": "      اختبار منتصف الفصل + مراجعة تراكمية ",
+      "topic": " ‏قياس الزوايا والأقواس ",
       "gregorianDate": "2026-04-26T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 100,
-      "topic": "              مقارنة المساحات وترتيبها ",
+      "topic": "‏قياس الزوايا والأقواس",
       "gregorianDate": "2026-04-27T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 101,
-      "topic": "قياس المساحة ",
+      "topic": "الأقواس والأوتار",
       "gregorianDate": "2026-04-28T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 102,
-      "topic": "استقصاء حل المسالة ",
+      "topic": "‏الأقواس والأوتار",
       "gregorianDate": "2026-04-29T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 103,
-      "topic": "اختبار الفصل ١١ +الاختبار التراكمي ",
+      "topic": "‏الأقواس والأوتار",
       "gregorianDate": "2026-04-30T00:00:00.000Z",
       "isSpecial": false
     },
@@ -636,31 +636,31 @@
     },
     {
       "index": 106,
-      "topic": "الفصل ١٢: القياس: السعة والكتلة: التهيئة ",
+      "topic": "‏الزوايا المحيطية",
       "gregorianDate": "2026-05-03T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 107,
-      "topic": "وحدات السعة غير القياسية ",
+      "topic": "‏الزوايا المحيطية",
       "gregorianDate": "2026-05-04T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 108,
-      "topic": "أحل المسالة أمثلها ",
+      "topic": "‏ ‏ ‏ ‏الزوايا المحيطية",
       "gregorianDate": "2026-05-05T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 109,
-      "topic": "المللترات واللترات ",
+      "topic": "‏ اختبار منتصف الفصل",
       "gregorianDate": "2026-05-06T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 110,
-      "topic": " +  اختبار منتصف الفصل مراجعة تراكمية ",
+      "topic": "‏ المماسات",
       "gregorianDate": "2026-05-07T00:00:00.000Z",
       "isSpecial": false
     },
@@ -678,31 +678,31 @@
     },
     {
       "index": 113,
-      "topic": "                  وحدات الكتلة غير القياسية ",
+      "topic": "المماسات ‏ ",
       "gregorianDate": "2026-05-10T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 114,
-      "topic": "الجرام والكيلو جرام ",
+      "topic": "‏ المماسات",
       "gregorianDate": "2026-05-11T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 115,
-      "topic": "تدريبات إضافية + هيا بنا نلعب ",
+      "topic": "‏ القاطع و ‏المماس وقياسات الزوايا",
       "gregorianDate": "2026-05-12T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 116,
-      "topic": "اختبار الفصل ١٢ + الاختبار التراكمي ",
+      "topic": "القاطع والمماس وقياسات الزوايا",
       "gregorianDate": "2026-05-13T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 117,
-      "topic": "تهيئة الفصل الثالث عشر ",
+      "topic": "القاطع والمماس وقياسات الزوايا",
       "gregorianDate": "2026-05-14T00:00:00.000Z",
       "isSpecial": false
     },
@@ -720,31 +720,31 @@
     },
     {
       "index": 120,
-      "topic": "جمع المئات ",
+      "topic": "‏إجازة عيد الأضحى المبارك ‏ ",
       "gregorianDate": "2026-05-17T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 121,
-      "topic": "الجمع بإعادة تجميع الآحاد ",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-18T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 122,
-      "topic": "الجمع بإعادة تجميع العشرات ",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-19T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 123,
-      "topic": "الجمع بإعادة تجميع العشرات ",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-20T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 124,
-      "topic": "أحل المسالة أنشئ جدولاً ",
+      "topic": "‏ ‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-21T00:00:00.000Z",
       "isSpecial": false
     },
@@ -762,31 +762,31 @@
     },
     {
       "index": 127,
-      "topic": "إجازة عيد الاضحى",
+      "topic": " ‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-24T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 128,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-25T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 129,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-26T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 130,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-27T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 131,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏ ‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-28T00:00:00.000Z",
       "isSpecial": false
     },
@@ -804,31 +804,31 @@
     },
     {
       "index": 134,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-05-31T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 135,
-      "topic": "إجازة عيد الاضحى",
+      "topic": "‏ ‏إجازة عيد الأضحى المبارك",
       "gregorianDate": "2026-06-01T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 136,
-      "topic": "                    تقدير ناتج الجمع ",
+      "topic": "‏قطع مستقيمة خاصة في الدائرة",
       "gregorianDate": "2026-06-02T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 137,
-      "topic": "اختبار منتصف الفصل + مراجعة تراكمية ",
+      "topic": "‏قطع مستقيمة خاصة في الدائرة",
       "gregorianDate": "2026-06-03T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 138,
-      "topic": "طرح المئات ",
+      "topic": "قطع مستقيمة خاصة في الدائرة",
       "gregorianDate": "2026-06-04T00:00:00.000Z",
       "isSpecial": false
     },
@@ -846,31 +846,31 @@
     },
     {
       "index": 141,
-      "topic": "الطرح بإعادة تجميع العشرات ",
+      "topic": "‏معمل الحاسبة/‏معادلة الدائرة",
       "gregorianDate": "2026-06-07T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 142,
-      "topic": "الطرح بإعادة تجميع المئات  ",
+      "topic": "‏ ‏معادلة الدائرة",
       "gregorianDate": "2026-06-08T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 143,
-      "topic": "الطرح بإعادة تجميع المئات  ",
+      "topic": "‏معادلة الدائرة",
       "gregorianDate": "2026-06-09T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 144,
-      "topic": "تقدير ناتج الطرح ",
+      "topic": "‏اختبار الفصل",
       "gregorianDate": "2026-06-10T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 145,
-      "topic": "اختبار الفصل ١٣ + الاختبار التراكمي ",
+      "topic": "‏اختبار تراكمي",
       "gregorianDate": "2026-06-11T00:00:00.000Z",
       "isSpecial": false
     },
@@ -888,31 +888,31 @@
     },
     {
       "index": 148,
-      "topic": "مراجعة ",
+      "topic": " ‏مراجعة ",
       "gregorianDate": "2026-06-14T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 149,
-      "topic": "مراجعة ",
+      "topic": "‏مراجعة",
       "gregorianDate": "2026-06-15T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 150,
-      "topic": "مراجعة ",
+      "topic": "‏مراجعة",
       "gregorianDate": "2026-06-16T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 151,
-      "topic": "مراجعة ",
+      "topic": "‏مراجعة",
       "gregorianDate": "2026-06-17T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 152,
-      "topic": "مراجعة ",
+      "topic": "‏مراجعة",
       "gregorianDate": "2026-06-18T00:00:00.000Z",
       "isSpecial": false
     },
@@ -930,37 +930,85 @@
     },
     {
       "index": 155,
-      "topic": "الاختبارات ",
+      "topic": " ‏اختبارات نهائية ",
       "gregorianDate": "2026-06-21T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 156,
-      "topic": "النهائية التحريرية ",
+      "topic": "‏اختبارات نهائية",
       "gregorianDate": "2026-06-22T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 157,
-      "topic": "الفصل الدراسي الثاني ",
+      "topic": "‏اختبارات نهائية",
       "gregorianDate": "2026-06-23T00:00:00.000Z",
       "isSpecial": false
     },
     {
       "index": 158,
-      "topic": "لعام ١٤٤٧ هـ",
+      "topic": "‏اختبارات نهائية",
       "gregorianDate": "2026-06-24T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 159,
+      "topic": "اختبارات نهائية",
+      "gregorianDate": "2026-06-25T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 160,
+      "topic": "--- عطلة نهاية الأسبوع ---",
+      "gregorianDate": "2026-06-26T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 161,
+      "topic": "--- عطلة نهاية الأسبوع ---",
+      "gregorianDate": "2026-06-27T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 162,
+      "topic": " ‏اختبارات نهائية ",
+      "gregorianDate": "2026-06-28T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 163,
+      "topic": "‏اختبارات نهائية",
+      "gregorianDate": "2026-06-29T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 164,
+      "topic": "‏اختبارات نهائية",
+      "gregorianDate": "2026-06-30T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 165,
+      "topic": "‏اختبارات نهائية",
+      "gregorianDate": "2026-07-01T00:00:00.000Z",
+      "isSpecial": false
+    },
+    {
+      "index": 166,
+      "topic": "اختبارات نهائية",
+      "gregorianDate": "2026-07-02T00:00:00.000Z",
       "isSpecial": false
     }
   ],
   "meta": {
-    "administration": "..............................................",
-    "school": "..............................................",
+    "administration": "......................................................",
+    "school": "......................................................",
     "term": "الثاني",
     "academicYear": "1447هـ",
     "subject": "الرياضيات",
-    "grade": "الثاني الابتدائي",
-    "teacherName": "..............................................",
+    "grade": "الأول الثانوي",
+    "teacherName": "......................................................",
     "useEasternDigits": true,
     "hideWeekends": true,
     "hiddenWeeks": [],
